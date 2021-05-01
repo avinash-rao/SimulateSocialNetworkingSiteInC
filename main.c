@@ -7,18 +7,18 @@
 // TEXTS -------------------------------------------------------------------------
 
 void textWebsiteName() {
-	printf("\n \t\t\t FakeBook\n");
+	printf("\n \t\t\t FakeBook");
+	printf("\n \t\t\t----------\n\n");
 }
 
 void textDevelopers() {
-	printf("\n\n\n ----------------------------------------------------------------- ");
-	printf("\n Developers - Avinash, Chetali, Garima, Jeet, Utpal");
+	printf("\n Developers - Avinash, Chetali, Garima, Jeet, Utpal \n");
 }
 
 // FUNCTIONS ---------------------------------------------------------------------
 												// ALL MENU OPTIONS---------
 void menuBar(int login,int signup,int exit,int logout,int back,int editProfile,int chat,int fr) {
-	int slno = 1;
+	int slno = 1, i;
 	printf("\n");
 	if(login==1) {
 		printf(" %d.Login",slno);
@@ -52,6 +52,10 @@ void menuBar(int login,int signup,int exit,int logout,int back,int editProfile,i
 		printf(" \t %d.Friend Request",slno);
 		slno++;
 	}
+	
+	printf("\n");
+	for(i=1; i<=slno; i++)
+		printf("--------------");
 }
 												// USER SWITCHING b/w PAGES-----
 void userChoice(int curntPage) {
@@ -97,7 +101,7 @@ void validateUserLogin(char *email[], char *password[]) {
 												// USER LOGIN------------
 void userLoginInput() {
 	char email[40], password[20];
-	printf("\n \t User Login");
+	printf("\n \t User Login \n");
 	
 	printf("\n Enter email: ");
 	scanf("%s", &email);
@@ -170,61 +174,140 @@ int validateInput(int inputType, char *userString) {
 		}
 	}
 }
-												// USER SIGNUP------------
-void userSignupInput() {
-	int validEmail=0, validPassword=0, validAge=0;
-	char email[100], password[100], confirmPassword[100],name[100], age[100], location[100];
-	printf("\n \t User Signup");
-	
+
+char* setUserEmail() {
+	fflush(stdin);
+	char *email = malloc(100 * sizeof(char));
+	int validEmail=0;
 	while(validEmail != 1) {
 		printf("\n Enter email: ");
-		scanf("%s", email);
+		gets(email);
 		if(strlen(email)==1)			//Checking for USER CHOOSING MENU Abruptly
 			checkForMenuOption(2, email);
 		validEmail = validateInput(1, email);
 	}
-	
-	while(validPassword != 1) {
-		printf("\n Enter password: ");
-		scanf("%s", password);
-		if(strlen(password)==1)			//Checking for USER CHOOSING MENU Abruptly
-			checkForMenuOption(2, password);
-		validPassword = validateInput(2, password);
-	}
-	
+	return email;
+}
+
+char* setUserName() {
+	fflush(stdin);
+	char *name = malloc(100 * sizeof(char));
 	printf("\n Enter your Name: ");
-	scanf("%s", name);
+	gets(name);
 	if(strlen(name)==1)			//Checking for USER CHOOSING MENU Abruptly
 		checkForMenuOption(2, name);
-		
+	return name;
+}
+
+char* setUserAge() {
+	fflush(stdin);
+	char *age = malloc(100 * sizeof(char));
+	int validAge=0;
 	while(validAge != 1) {
 		printf("\n Enter you Age: ");
-		scanf("%s", age);
+		gets(age);
 		if(strlen(age)==1)			//Checking for USER CHOOSING MENU Abruptly
 			checkForMenuOption(2, age);
 		validAge = validateInput(3, age);
 	}
-		
+	return age;
+}
+
+char* setUserLocation() {
+	fflush(stdin);
+	char *location = malloc(100 * sizeof(char));
 	printf("\n Enter your Location: ");
-	scanf("%s", location);
+	gets(location);
 	if(strlen(location)==1)			//Checking for USER CHOOSING MENU Abruptly
 		checkForMenuOption(2, location);
-	
-	validPassword = 0;
+	return location;
+}
+
+char* setUserPassword() {
+	fflush(stdin);
+	char *password = malloc(100 * sizeof(char));
+	int validPassword=0;
 	while(validPassword != 1) {
 		printf("\n Enter password: ");
-		scanf("%s", confirmPassword);
-		if(strlen(confirmPassword)==1)			//Checking for USER CHOOSING MENU Abruptly
-			checkForMenuOption(2, confirmPassword);
-		validPassword = validateInput(2, confirmPassword);
+		gets(password);
+		if(strlen(password)==1)			//Checking for USER CHOOSING MENU Abruptly
+			checkForMenuOption(2, password);
+		validPassword = validateInput(2, password);
+	}
+	return password;
+}
+
+
+
+												// USER SIGNUP------------
+void userSignupInput() {
+	int validPassword=0;
+	char *email, *password, *confirmPassword,*name, *age, *location;
+	printf("\n \t User Signup \n");
+	
+	email = setUserEmail();
+	password = setUserPassword();
+	name = setUserName();
+	age = setUserAge();
+	location = setUserLocation();
+	
+	while(validPassword != 1) {
+		confirmPassword = setUserPassword();
 		
 		if(strcmp(password,confirmPassword)!=0) {
 			printf("\n Your Passwords did not match! Please try again.");
 			validPassword = 0;
 		}
+		else
+			validPassword = 1;
 	}
 	
 	createNewUserAccount();
+	//free(email,password,name,age,location,confirmPassword);
+}
+												// USER EDIT PROFILE (SETTINGS)------------
+void userSettingsInput() {
+	int userInput;
+	char *password, *confirmPassword,*name, *age, *location;
+	printf("\n \t Edit Profile \n");
+	printf("\n 3.Change Name \t 4.Change Age \t 5.Change Location \t 6.Reset Password \t 7.Delete Account \n");
+	scanf("%d",&userInput);
+	
+	if(userInput==3) {
+		name = setUserName();
+		// Update name $$$$$$$$$$$$$$$$$$$$$$$$$
+	}
+	
+	if(userInput==4) {
+		age = setUserAge();
+		// Update age $$$$$$$$$$$$$$$$$$$$$$$$$
+	}
+	
+	if(userInput==5) {
+		location = setUserLocation();
+		// Update location $$$$$$$$$$$$$$$$$$$$$$$$$
+	}
+	
+	if(userInput==6) {
+		int validPassword=0;
+		password = setUserPassword();
+		
+		while(validPassword != 1) {
+			confirmPassword = setUserPassword();
+			
+			if(strcmp(password,confirmPassword)!=0) {
+				printf("\n Your Passwords did not match! Please try again.");
+				validPassword = 0;
+			}
+			else
+				validPassword = 1;
+		}
+		// Update password $$$$$$$$$$$$$$$$$$$$$$$$$
+	}
+	
+	if(userInput==7) {
+		// Delete Account $$$$$$$$$$$$$$$$$$$$$$$$$
+	}
 }
 
 // PAGES ------------------------------------------------------------------------
@@ -252,7 +335,23 @@ void signupPage() {
 }
 
 void userHomePage(char *email) {
-	
+	system("cls");
+	textWebsiteName();
+	menuBar(0,0,0,1,0,1,1,1);
+	userChoice(4);
+}
+
+void settingsPage(char *email) {
+	system("cls");
+	textWebsiteName();
+	menuBar(0,0,0,1,1,0,0,0);
+	userSettingsInput();
+}
+
+void frndRqstPage(char *email) {
+	system("cls");
+	textWebsiteName();
+	menuBar(0,0,0,1,1,0,0,0);
 }
 
 // MAIN -------------------------------------------------------------------------
