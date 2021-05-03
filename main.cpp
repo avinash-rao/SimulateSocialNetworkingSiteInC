@@ -112,7 +112,7 @@ void userSignupInput() {
 												// USER EDIT PROFILE (SETTINGS)------------
 void userSettingsInput() {
 	int userInput;
-	char *password, *confirmPassword,*name, *age, *location;
+	string password, confirmPassword,name, age, location;
 	printf("\n \t Edit Profile \n");
 	printf("\n 3.Change Name \t 4.Change Age \t 5.Change Location \t 6.Reset Password \t 7.Delete Account \n");
 	scanf("%d",&userInput);

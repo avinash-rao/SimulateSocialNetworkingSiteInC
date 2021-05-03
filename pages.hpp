@@ -102,7 +102,7 @@ class Pages{
 	}
 
  // TODO: navigate to landing page after account creation
-	void signupPage() {
+	static void signupPage() {
 		system("cls");
 		textWebsiteName();
 		menuBar(0,0,1,0,1,0,0,0);

@@ -38,7 +38,7 @@ void userLoginInput() {
 		
 	validateUserLogin(email, password);
 }
-												// USER SIGNUP Validation-----
+	// USER SIGNUP Validation-----
 int validateInput(int inputType, char *userString) {
 	// inputType = 1->Email, 2->Password, 3->Age
 	
