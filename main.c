@@ -6,8 +6,8 @@
 #include<stdlib.h>
 #include<string.h>
 #include<ctype.h>
-#include "pages.h"
-#include "validations.h"
+#include "pages.hpp"
+#include "validations.hpp"
 
 // FUNCTIONS ---------------------------------------------------------------------
 
