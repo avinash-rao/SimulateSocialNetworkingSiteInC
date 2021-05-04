@@ -3,8 +3,8 @@ using namespace std;
 #include <cstring>
 #include <stdlib.h>
 #include <ctype.h>
-// #ifndef PAGES_HPP
-// #define PAGES_HPP
+#ifndef VALIDATIONS_HPP
+#define VALIDATIONS_HPP
 #include "pages.hpp"
 // USER LOGIN Validation-----
 class Validation{
@@ -28,18 +28,18 @@ void userLoginInput() {
 	
 	cout <<"\n Enter email: ";
 	cin >> email;
-	if(strlen(email)==1)			//Checking for USER CHOOSING MENU Abruptly
+	if(email.length()==1)			//Checking for USER CHOOSING MENU Abruptly
 		checkForMenuOption(2, email);
 	
-	cout << ("\n Enter password: ");
+	cout <<"\n Enter password: ";
 	cin >> password;
-	if(strlen(password)==1)			//Checking for USER CHOOSING MENU Abruptly
+	if(password.length()==1)			//Checking for USER CHOOSING MENU Abruptly
 		checkForMenuOption(2, password);
 		
 	validateUserLogin(email, password);
 }
 	// USER SIGNUP Validation-----
-int validateInput(int inputType, char *userString) {
+int validateInput(int inputType, string userString) {
 	// inputType = 1->Email, 2->Password, 3->Age
 	
 	// Email Validation
@@ -48,13 +48,13 @@ int validateInput(int inputType, char *userString) {
 		
 		if(userString[0]=='@' || userString[0]=='.')
 			crtPosition = 0;
-		for(i=0; i<strlen(userString); i++) {
-			letter = userString[i];				//Checking for only VALID Email characters
+		for(i=0; i<userString.length(); i++) {
+			letter = userString.at(i);				//Checking for only VALID Email characters
 			if((letter>=48 && letter<=57) || (letter>=97 && letter<=122) || letter==46 || letter==64)
 			{
-				if(userString[i]=='@')
+				if(userString.at(i)=='@')
 					atTheRate = 1;
-				if(userString[i]=='.')
+				if(userString.at(i)=='.')
 					dotCom = 1;
 			}
 			else {								//If INVALID Email characters are found
@@ -97,6 +97,74 @@ int validateInput(int inputType, char *userString) {
 		}
 	}
 }
+void userSignupInput() {
+	int validPassword=0;
+	string email, password, confirmPassword, name, age, location;
+	cout <<("\n \t User Signup \n");
+	
+	email = setUserEmail();
+	password = setUserPassword();
+	name = setUserName();
+	age = setUserAge();
+	location = setUserLocation();
+	
+	while(validPassword != 1) {
+		confirmPassword = setUserPassword();
+		
+		if(password.compare(confirmPassword))!=0) {
+			cout <<("\n Your Passwords did not match! Please try again.");
+			validPassword = 0;
+		}
+		else
+			validPassword = 1;
+	}
+	
+	createNewUserAccount();
+	//free(email,password,name,age,location,confirmPassword);
+}
+												// USER EDIT PROFILE (SETTINGS)------------
+void userSettingsInput() {
+	int userInput;
+	string password, confirmPassword,name, age, location;
+	cout <<"\n \t Edit Profile \n";
+	cout <<"\n 3.Change Name \t 4.Change Age \t 5.Change Location \t 6.Reset Password \t 7.Delete Account \n";
+	cin>>userInput;
+	
+	if(userInput==3) {
+		name = setUserName();
+		// Update name $$$$$$$$$$$$$$$$$$$$$$$$$
+	}
+	
+	if(userInput==4) {
+		age = setUserAge();
+		// Update age $$$$$$$$$$$$$$$$$$$$$$$$$
+	}
+	
+	if(userInput==5) {
+		location = setUserLocation();
+		// Update location $$$$$$$$$$$$$$$$$$$$$$$$$
+	}
+	
+	if(userInput==6) {
+		int validPassword=0;
+		password = setUserPassword();
+		
+		while(validPassword != 1) {
+			confirmPassword = setUserPassword();
+			
+			if(password.compare(confirmPassword)!=0) {
+				cout <<"\n Your Passwords did not match! Please try again.";
+				validPassword = 0;
+			}
+			else
+				validPassword = 1;
+		}
+		// Update password $$$$$$$$$$$$$$$$$$$$$$$$$
+	}
+	
+	if(userInput==7) {
+		// Delete Account $$$$$$$$$$$$$$$$$$$$$$$$$
+	}
+}
 };
-// #endif
-
+#endif
